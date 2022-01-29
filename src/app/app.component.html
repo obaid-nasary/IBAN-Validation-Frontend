@@ -1,0 +1,139 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" style="color:white;">IBAN Validator</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a class="nav-link" (click)="onOpenModal(checkIban, 'add')"> Add IBAN <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" (click)="onOpenModal(checkIban, 'theValid')"> Print Valid <span class="sr-only">(current)</span></a>
+       </li>
+       <li class="nav-item active">
+        <a class="nav-link" (click)="onOpenModal(checkIban, 'theInvalid')"> Print Invalid <span class="sr-only">(current)</span></a>
+     </li>
+     </ul>
+     <form class="form-inline my-2 my-lg-0">
+        <input type="search" name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search ibans..."
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search IBANs..." required>
+     </form>
+  </div>
+</nav>
+
+
+<hr>
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                <th class="text-center"><span>ID</span></th>
+                                <th><span>IBAN Number</span></th>
+                                <th class="text-center"><span>Status</span></th>
+
+                                <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let iban of ibans" >
+                                    <td>
+                                        <a href="#" class="user-link" >{{iban.id}}</a>
+                                    </td>
+                                    <td>{{iban.iban}}</td>
+                                    <td class="text-center">
+                                      <div *ngIf="!iban.valid">
+                                        <span class="label label-default">Invalid</span>
+                                      </div>
+                                      <div *ngIf="iban.valid">
+                                        <span class="label label-default">Valid</span>
+                                      </div>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link text-warning">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link text-info">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="modal fade" id="addIbanModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Add IBAN & Check</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddIban(addForm)">
+          <div class="form-group">
+             <label for="name">IBAN Number</label>
+             <input ngModel name="iban" class="form-control" id="name" placeholder="LT47 2123 5609 6090" required>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+<!-- ************************************************************ -->
+<div class="container">
+    <div class="row">
+        <div *ngFor="let iban of ibans" class="col-md-6 col-xl-6">
+            <div class="card m-b-30">
+                <div class="card-body row">
+                    <div class="col-12 card-title align-self-center mb-0">
+                        <h5>IBAN: {{iban?.iban}}</h5>
+                          <div *ngIf="!iban.valid">
+                            <p class="m-0">Validity: Invalid</p>
+                          </div>
+                          <div *ngIf="iban.valid">
+                            <p class="m-0">Validity: Valid</p>
+                          </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
-import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-// import { resourceLimits } from 'worker_threads';
 import { Iban } from './iban';
 import { IbanService } from './iban.service';
 
@@ -15,8 +12,6 @@ import { IbanService } from './iban.service';
 })
 export class AppComponent implements OnInit{
   public ibans!: Iban[];
-  // public checkIban!: Iban;
-  // public ibana!: Iban [];
   public validIbans!: Iban[];
   public changeModelTitle!: string;
 
@@ -27,6 +22,9 @@ export class AppComponent implements OnInit{
       this.getIbans();
   }
 
+  /**
+   * Reads all the inserted and validated numbers and displays in table
+   */
   public getIbans(): void{
     this.ibanService.getIbans().subscribe(
       (response: Iban[]) =>{
@@ -38,6 +36,9 @@ export class AppComponent implements OnInit{
     );
   }
 
+  /**
+   * Checks and prints only valid IBAN numbers log
+   */
   public getValidIbans(): void{
     this.ibanService.getIbanByValid(1).subscribe(
       (response: Iban[]) =>{
@@ -50,6 +51,9 @@ export class AppComponent implements OnInit{
     );
   }
 
+  /**
+   * Checks and prints only invalid IBAN numbers log
+   */
   public getInValidIbans(): void{
     this.ibanService.getIbanByValid(0).subscribe(
       (response: Iban[]) =>{
@@ -62,11 +66,15 @@ export class AppComponent implements OnInit{
     );
   }
 
+  /**
+   *
+   * @param addForm takes IBAN number and sends for validation and adding
+   */
   public onAddIban(addForm: NgForm): void{
     document.getElementById('add-iban-form')!.click();
       this.ibanService.addIban(addForm.value).subscribe(
         (response: Iban) => {
-          console.log(response);
+          alert("IBAN validated successfully");
           this.getIbans();
         },
         (error: HttpErrorResponse) => {
@@ -75,8 +83,11 @@ export class AppComponent implements OnInit{
       );
   }
 
+  /**
+   *
+   * @param mode displays Modals on button click based on mode
+   */
   public onOpenModal(mode: string): void{
-    console.log('hi');
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -86,7 +97,6 @@ export class AppComponent implements OnInit{
       button.setAttribute('data-target', '#addIbanModal');
     }
     if (mode === 'theValid'){
-      console.log('hello');
       button.setAttribute('data-target', '#printValidModal');
       this.getValidIbans();
       this.changeModelTitle = "Valid IBAN Numbers Log";

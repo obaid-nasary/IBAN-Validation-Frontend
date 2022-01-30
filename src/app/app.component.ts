@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Iban } from './iban';
@@ -75,7 +76,13 @@ export class AppComponent implements OnInit{
       this.ibanService.addIban(addForm.value).subscribe(
         (response: Iban) => {
           alert("IBAN validated successfully");
+          console.log(response);
           this.getIbans();
+          if(response.valid ==1 ){
+            alert("Entered IBAN was Valid");
+          }else{
+            alert("Entered IBAN was Invalid");
+          }
         },
         (error: HttpErrorResponse) => {
           alert(error.message);

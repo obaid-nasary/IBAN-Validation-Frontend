@@ -1,6 +1,14 @@
 # Ibanvalidation
 
+This validator is for the validation of [International Bank Account Numbers](https://en.wikipedia.org/wiki/International_Bank_Account_Number) and it is the front-end for [obaidnasary/IBAN-Validator-Backend](https://github.com/obaidnasary/IBAN-Validator-Backend/blob/main/README.md)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
+
+## Features
+
+- Insert new IBAN numbers to the database and check if the IBAN number is valid or invalid
+- Print the history and log of all the IBAN numbers inserted
+- Filter IBAN numbers by valid and invalid 
 
 ## Development server
 
